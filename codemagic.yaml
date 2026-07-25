@@ -19,3 +19,18 @@ workflows:
           zip -r ../../../app-release-unsigned.ipa Payload
     artifacts:
       - app-release-unsigned.ipa
+
+  android-build:
+    name: Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+      - name: Build APK
+        script: |
+          flutter build apk --release
+    artifacts:
+      - build/app/outputs/**/*.apk
